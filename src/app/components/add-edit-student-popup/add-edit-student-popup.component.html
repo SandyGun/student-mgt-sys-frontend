@@ -1,0 +1,89 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">{{ type === 'add' ? 'Add Student' : 'Update Student' }}</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="studentForm">
+    <!-- Index Number -->
+    <div class="mb-3">
+      <label for="indexNumber">Index Number</label>
+      <input
+        id="indexNumber"
+        type="text"
+        class="form-control"
+        formControlName="indexNumber"
+      />
+      @if (studentForm && studentForm.get('indexNumber')?.invalid && studentForm.get('indexNumber')?.touched) {
+        <div class="text-danger">Index Number is required</div>
+      }
+    </div>
+
+    <!-- Name -->
+    <div class="mb-3">
+      <label for="name">Name</label>
+      <input
+        id="name"
+        type="text"
+        class="form-control"
+        formControlName="name"
+      />
+      @if (studentForm && studentForm.get('name')?.invalid && studentForm.get('name')?.touched) {
+        <div class="text-danger">
+          Name is required
+        </div>
+      }
+    </div>
+
+    <!-- Date of Birth -->
+    <div class="mb-3">
+      <label for="dateOfBirth">Date of Birth</label>
+      <div class="input-group">
+        <input
+          id="dateOfBirth"
+          class="form-control"
+          placeholder="yyyy-mm-dd"
+          formControlName="dateOfBirth"
+          ngbDatepicker
+          #dp="ngbDatepicker"
+          [ngClass]="{'is-invalid': studentForm.get('dateOfBirth')?.invalid && studentForm.get('dateOfBirth')?.touched}"
+        />
+        <button
+          class="btn btn-outline-secondary bi bi-calendar3"
+          type="button"
+          (click)="dp.toggle()"
+        ></button>
+      </div>
+      @if (studentForm && studentForm.get('dateOfBirth')?.invalid && studentForm.get('dateOfBirth')?.touched) {
+        <div class="text-danger">
+          Date of Birth is required
+        </div>
+      }
+
+    </div>
+
+    <!-- GPA -->
+    <div class="mb-3">
+      <label for="gpa">GPA</label>
+      <input
+        id="gpa"
+        type="number"
+        class="form-control"
+        formControlName="gpa"
+        step="0.01"
+        min="0"
+        max="4"
+      />
+      @if (studentForm && studentForm.get('gpa')?.touched) {
+        <div class="text-danger">
+          GPA must be between 0 and 4
+        </div>
+      }
+
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-secondary" (click)="activeModal.dismiss()">Cancel</button>
+  <button class="btn btn-primary" [disabled]="studentForm.invalid" (click)="submitForm()">Submit</button>
+</div>
+

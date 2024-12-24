@@ -6,31 +6,39 @@
         <h3>Student Manegement System</h3>
       </div>
     </div>
-    <div class="row">
-
+    <div class="row create-new-student-row">
+      <button type="button" class="btn btn-primary" (click)="openAddEditStudentPopup()">+ Add new student</button>
     </div>
-    <div class="row">
+    <div class="row table-main-row">
       <table class="table table-striped">
         <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Country</th>
-            <th scope="col">Area</th>
-            <th scope="col">Population</th>
-          </tr>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Id</th>
+          <th scope="col">Index No</th>
+          <th scope="col">Name</th>
+          <th scope="col">DoB</th>
+          <th scope="col">GPA</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
         </thead>
         <tbody>
-          @for (country of countries; track country.name; let i = $index) {
-          <tr>
-            <th scope="row">{{ i + 1 }}</th>
-            <td>
-              <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag"
-                [alt]="'The flag of ' + country.name" class="me-2" style="width: 20px" />
-              {{ country.name }}
-            </td>
-            <td>{{ country.area | number }}</td>
-            <td>{{ country.population | number }}</td>
-          </tr>
+          @for (student of students; track student.id; let i = $index) {
+            <tr>
+              <th scope="row">{{ i + 1 }}</th>
+              <td> {{ student.id }}</td>
+              <td> {{ student.index }}</td>
+              <td>{{ student.name }}</td>
+              <td>{{ student.dob }}</td>
+              <td>{{ student.gpa }}</td>
+              <td>
+                <button type="button" class="btn btn-success">Edit</button>
+              </td>
+              <td>
+                <button type="button" class="btn btn-danger">Delete</button>
+              </td>
+            </tr>
           }
         </tbody>
       </table>

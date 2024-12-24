@@ -1,0 +1,16 @@
+// Global styles or component-specific SCSS file
+
+.is-valid {
+  border: 2px solid #198754; // Bootstrap's green color for valid inputs
+  box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25); // Add a subtle green glow
+}
+
+.is-valid ~ .valid-feedback {
+  display: block;
+  color: #198754;
+}
+
+
+.text-danger {
+  color: red;
+}
