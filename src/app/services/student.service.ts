@@ -27,4 +27,12 @@ export class StudentService {
   createStudent(studentData: Student): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'student/createStudent', studentData);
   }
+
+  updateStudent(studentData: Student): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'student/updateStudent', studentData);
+  }
+
+  deleteStudent(id: number): Observable<any> {
+    return this.http.delete<any>(this.apiUrl + 'student/deleteStudent/' + id);
+  }
 }

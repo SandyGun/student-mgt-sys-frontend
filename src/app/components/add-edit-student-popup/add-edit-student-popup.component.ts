@@ -17,7 +17,25 @@ import {StudentService} from '../../services/student.service';
 })
 export class AddEditStudentPopupComponent {
 
-  @Input() type: string = 'add';
+  type: any = null
+  data: any = null
+
+  @Input() set setType(data: any) {
+    if (data) {
+      this.type = data;
+    }
+  };
+
+  @Input() set studentData(data: any) {
+    if (data) {
+      this.data = data;
+      this.studentForm?.get('index')?.setValue(this.data?.index);
+      this.studentForm?.get('name')?.setValue(this.data?.name);
+      this.studentForm?.get('dob')?.setValue(this.convertStringToNgbDate(this.data?.dob));
+      this.studentForm?.get('gpa')?.setValue(this.data?.gpa);
+    }
+  };
+
   studentForm: FormGroup;
 
   constructor(
@@ -30,18 +48,15 @@ export class AddEditStudentPopupComponent {
       index: ['', Validators.required],
       name: ['', Validators.required],
       dob: ['', Validators.required],
-      gpa: [
-        '',
-        [Validators.min(0), Validators.max(4)]
-      ]
+      gpa: ['']
     });
+
+
   }
+
 
   submitForm() {
     if (this.studentForm.valid) {
-      console.log(this.studentForm.value); // You can send this data to the backend or process it further
-      // this.activeModal.close(this.studentForm.value);
-
       if (this.type === 'add') {
         const requestData: Student = {
           id: null,
@@ -50,7 +65,6 @@ export class AddEditStudentPopupComponent {
           dob: this.getFormattedDob(this.studentForm.value.dob),
           gpa: null,
         }
-        console.log(requestData)
 
         this.studentService.createStudent(requestData).subscribe(createStudentResponse => {
           if (createStudentResponse) {
@@ -58,7 +72,18 @@ export class AddEditStudentPopupComponent {
           }
         });
       } else {
-
+        const requestData: Student = {
+          id: this.data.id,
+          index: this.studentForm.value.index,
+          name: this.studentForm.value.name,
+          dob: this.getFormattedDob(this.studentForm.value.dob),
+          gpa: this.studentForm.value.gpa,
+        }
+        this.studentService.updateStudent(requestData).subscribe(updateStudentResponse => {
+          if (updateStudentResponse) {
+            this.activeModal.close('success');
+          }
+        });
       }
     }
   }
@@ -68,6 +93,11 @@ export class AddEditStudentPopupComponent {
     const month = dob.month < 10 ? `0${dob.month}` : dob.month; // Add leading zero to single-digit months
     const day = dob.day < 10 ? `0${dob.day}` : dob.day;         // Add leading zero to single-digit days
     return `${year}-${month}-${day}`;
+  }
+
+  convertStringToNgbDate(dateString: string): { year: number; month: number; day: number } {
+    const [year, month, day] = dateString.split('-').map(Number); // Split the string and convert to numbers
+    return {year, month, day};
   }
 }
 

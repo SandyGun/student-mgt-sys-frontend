@@ -25,29 +25,36 @@ export class AppComponent {
 
   private getAllStudents() {
     this.studentService.getAllStudents().subscribe(allStudentsData => {
-      console.log(allStudentsData);
       this.students = allStudentsData;
     })
   }
 
-  openAddEditStudentPopup() {
+  openAddEditStudentPopup(studentData: any = null) {
     const modalRef = this.modalService.open(AddEditStudentPopupComponent, {
       size: 'lg', // Options: 'sm', 'lg', 'xl'
       backdrop: 'static', // Disable closing by clicking outside
       keyboard: false // Disable closing with the ESC key
     });
 
-    modalRef.componentInstance.type = 'add';
+    modalRef.componentInstance.setType = studentData === null ? 'add' : 'edit';
+    modalRef.componentInstance.studentData = studentData;
+
 
     modalRef.result.then(
       (result) => {
         if (result === 'success') {
           this.getAllStudents();
         }
-      },
-      (reason) => {
-        console.log('Modal dismissed with:', reason);
       }
     );
+  }
+
+
+  deleteStudent(studentData: any) {
+    this.studentService.deleteStudent(studentData.id).subscribe(deleteStudentResponse => {
+      if (deleteStudentResponse) {
+        this.getAllStudents();
+      }
+    });
   }
 }

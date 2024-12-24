@@ -33,10 +33,10 @@
               <td>{{ student.dob }}</td>
               <td>{{ student.gpa }}</td>
               <td>
-                <button type="button" class="btn btn-success">Edit</button>
+                <button type="button" class="btn btn-success" (click)="openAddEditStudentPopup(student)">Edit</button>
               </td>
               <td>
-                <button type="button" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-danger" (click)="deleteStudent(student)">Delete</button>
               </td>
             </tr>
           }
