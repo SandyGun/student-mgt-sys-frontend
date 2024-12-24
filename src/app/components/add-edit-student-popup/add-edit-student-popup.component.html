@@ -6,14 +6,14 @@
   <form [formGroup]="studentForm">
     <!-- Index Number -->
     <div class="mb-3">
-      <label for="indexNumber">Index Number</label>
+      <label for="index">Index Number</label>
       <input
-        id="indexNumber"
+        id="index"
         type="text"
         class="form-control"
-        formControlName="indexNumber"
+        formControlName="index"
       />
-      @if (studentForm && studentForm.get('indexNumber')?.invalid && studentForm.get('indexNumber')?.touched) {
+      @if (studentForm && studentForm.get('index')?.invalid && studentForm.get('index')?.touched) {
         <div class="text-danger">Index Number is required</div>
       }
     </div>
@@ -36,16 +36,16 @@
 
     <!-- Date of Birth -->
     <div class="mb-3">
-      <label for="dateOfBirth">Date of Birth</label>
+      <label for="dob">Date of Birth</label>
       <div class="input-group">
         <input
-          id="dateOfBirth"
+          id="dob"
           class="form-control"
           placeholder="yyyy-mm-dd"
-          formControlName="dateOfBirth"
+          formControlName="dob"
           ngbDatepicker
           #dp="ngbDatepicker"
-          [ngClass]="{'is-invalid': studentForm.get('dateOfBirth')?.invalid && studentForm.get('dateOfBirth')?.touched}"
+          [ngClass]="{'is-invalid': studentForm.get('dob')?.invalid && studentForm.get('dob')?.touched}"
         />
         <button
           class="btn btn-outline-secondary bi bi-calendar3"
@@ -53,7 +53,7 @@
           (click)="dp.toggle()"
         ></button>
       </div>
-      @if (studentForm && studentForm.get('dateOfBirth')?.invalid && studentForm.get('dateOfBirth')?.touched) {
+      @if (studentForm && studentForm.get('dob')?.invalid && studentForm.get('dob')?.touched) {
         <div class="text-danger">
           Date of Birth is required
         </div>
@@ -62,24 +62,27 @@
     </div>
 
     <!-- GPA -->
-    <div class="mb-3">
-      <label for="gpa">GPA</label>
-      <input
-        id="gpa"
-        type="number"
-        class="form-control"
-        formControlName="gpa"
-        step="0.01"
-        min="0"
-        max="4"
-      />
-      @if (studentForm && studentForm.get('gpa')?.touched) {
-        <div class="text-danger">
-          GPA must be between 0 and 4
-        </div>
-      }
+    @if (type !== 'add') {
+      <div class="mb-3">
+        <label for="gpa">GPA</label>
+        <input
+          id="gpa"
+          type="number"
+          class="form-control"
+          formControlName="gpa"
+          step="0.01"
+          min="0"
+          max="4"
+        />
+        @if (studentForm && studentForm.get('gpa')?.touched) {
+          <div class="text-danger">
+            GPA must be between 0 and 4
+          </div>
+        }
 
-    </div>
+      </div>
+    }
+
   </form>
 </div>
 <div class="modal-footer">
