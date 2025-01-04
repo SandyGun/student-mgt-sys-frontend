@@ -4,6 +4,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AddEditStudentPopupComponent} from './components/add-edit-student-popup/add-edit-student-popup.component';
 import {Student} from './models/student';
 
+// comment
 
 @Component({
   selector: 'app-root',
